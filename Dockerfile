@@ -1,10 +1,13 @@
-FROM golang:alpine
+FROM golang:1.9.2-alpine
 
-WORKDIR /go/src/app
+WORKDIR /go/src/github.com/antonybudianto/go-starter
+
+RUN apk --update add git
+RUN go-wrapper download -u github.com/golang/dep/cmd/dep \
+    && go-wrapper install github.com/golang/dep/cmd/dep
 
 COPY . .
 
-RUN go-wrapper download   # "go get -d -v ./..."
-RUN go-wrapper install    # "go install -v ./..."
+RUN dep ensure
 
-CMD ["go-wrapper", "run"] # ["app"]
+CMD go run main.go
