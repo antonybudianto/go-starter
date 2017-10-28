@@ -17,12 +17,12 @@ var people = []models.Person {
 }
 
 // GetPeople - Display all from the people var
-func GetPeople(w http.ResponseWriter, r *http.Request) {
+func getPeople(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(people)
 }
 
 // GetPerson - Display a single data
-func GetPerson(w http.ResponseWriter, r *http.Request) {
+func getPerson(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for _, item := range people {
 			if item.ID == params["id"] {
@@ -34,7 +34,7 @@ func GetPerson(w http.ResponseWriter, r *http.Request) {
 }
 
 // CreatePerson - create a new item
-func CreatePerson(w http.ResponseWriter, r *http.Request) {
+func createPerson(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var person models.Person
 	_ = json.NewDecoder(r.Body).Decode(&person)
@@ -44,7 +44,7 @@ func CreatePerson(w http.ResponseWriter, r *http.Request) {
 }
 
 // DeletePerson - Delete an item
-func DeletePerson(w http.ResponseWriter, r *http.Request) {
+func deletePerson(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for index, item := range people {
 			if item.ID == params["id"] {
@@ -53,4 +53,12 @@ func DeletePerson(w http.ResponseWriter, r *http.Request) {
 			}
 			json.NewEncoder(w).Encode(people)
 	}
+}
+
+// RegisterPersonRoutes - Register api routes here
+func RegisterPersonRoutes(r *mux.Router) {
+	r.HandleFunc("/people", getPeople).Methods("GET")
+	r.HandleFunc("/people/{id}", getPerson).Methods("GET")
+	r.HandleFunc("/people/{id}", createPerson).Methods("POST")
+	r.HandleFunc("/people/{id}", deletePerson).Methods("DELETE")
 }
