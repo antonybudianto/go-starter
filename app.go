@@ -12,11 +12,13 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// App level struct containing its dependencies
 type App struct {
 	Router *mux.Router
 	DB     *sql.DB
 }
 
+// Initialize App dependencies
 func (a *App) Initialize(user, password, dbname string) {
 	connectionString := fmt.Sprintf("%s:%s@tcp(db:3306)/%s", user, password, dbname)
 
@@ -30,6 +32,7 @@ func (a *App) Initialize(user, password, dbname string) {
 	a.initializeRoutes()
 }
 
+// Run app
 func (a *App) Run(addr string) {
 	log.Fatal(http.ListenAndServe(addr, a.Router))
 }
