@@ -4,6 +4,22 @@ services:
     build: .
     ports:
       - "8000:8000"
+    depends_on:
+      - db
     volumes:
       - ".:/go/src/github.com/antonybudianto/go-starter"
       - "/go/src/github.com/antonybudianto/go-starter/vendor"
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: hello
+    volumes:
+      - "./db:/db"
+    ports:
+      - 3306:3306
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
