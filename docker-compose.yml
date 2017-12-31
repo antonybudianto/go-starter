@@ -14,8 +14,6 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: hello
-    volumes:
-      - "./db:/db"
     ports:
       - 3306:3306
   adminer:
