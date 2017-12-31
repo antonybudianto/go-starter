@@ -15,4 +15,4 @@ RUN dep ensure
 
 ENTRYPOINT [ "/wait-for.sh", "db:3306", "--" ]
 
-CMD [ "sh", "-c", "go run *.go" ]
+CMD [ "sh", "-c", "go run cmd/apiapp/*.go" ]
