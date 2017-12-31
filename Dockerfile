@@ -8,7 +8,7 @@ RUN go-wrapper download -u github.com/golang/dep/cmd/dep \
 
 COPY . .
 
-ADD bin/wait-for.sh /wait-for.sh
+ADD files/bin/wait-for.sh /wait-for.sh
 RUN chmod +x /wait-for.sh
 
 RUN dep ensure
