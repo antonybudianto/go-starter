@@ -6,8 +6,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/antonybudianto/go-starter/routes/user"
+	// for driver
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 )
 
 // App level struct containing its dependencies
@@ -36,6 +38,6 @@ func (a *App) Run(addr string) {
 }
 
 func (a *App) initializeRoutes() {
-	u := user.UserHandler{a.Router, a.DB}
+	u := user.Handler{Router: a.Router, DB: a.DB}
 	u.InitializeRoutes()
 }
