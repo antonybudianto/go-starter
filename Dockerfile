@@ -8,6 +8,11 @@ RUN go-wrapper download -u github.com/golang/dep/cmd/dep \
 
 COPY . .
 
+ADD files/bin/wait-for.sh /wait-for.sh
+RUN chmod +x /wait-for.sh
+
 RUN dep ensure
 
-CMD go run main.go
+ENTRYPOINT [ "/wait-for.sh", "db:3306", "--" ]
+
+CMD [ "sh", "-c", "go run cmd/apiapp/*.go" ]
